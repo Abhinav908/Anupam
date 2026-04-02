@@ -1,0 +1,25 @@
+# Node.js modules
+node_modules/
+
+# Environment variables
+.env
+
+# VSCode settings
+.vscode/
+
+# IntelliJ IDEA settings
+.idea/
+
+# Distribution folder
+dist/
+
+# Build folder
+build/
+
+# Logs
+logs/
+
+# Miscellaneous files to ignore
+.DS_Store
+Thumbs.db
+*.log
