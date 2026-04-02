@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form { margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Attendance System</h1>
+    <h2>Student Attendance</h2>
+    <form id="attendanceForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="rollNumber">Roll Number:</label>
+        <input type="text" id="rollNumber" name="rollNumber" required>
+        <button type="submit">Mark Attendance</button>
+    </form>
+
+    <h2>Admin Panel</h2>
+    <button id="viewAttendance">View Attendance</button>
+    <button id="downloadAttendance">Download Attendance</button>
+
+    <script>
+        // JavaScript to handle attendance marking and admin functionalities
+        const attendanceForm = document.getElementById('attendanceForm');
+
+        attendanceForm.onsubmit = function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const rollNumber = document.getElementById('rollNumber').value;
+
+            console.log(`${name} (Roll No: ${rollNumber}) has marked attendance.`);
+            alert('Attendance marked successfully!');
+            attendanceForm.reset();
+        };
+
+        document.getElementById('viewAttendance').onclick = function() {
+            // Logic to view attendance records
+            console.log('Viewing attendance records...');
+            alert('Viewing attendance records... (This would show the actual records in a real system)');
+        };
+
+        document.getElementById('downloadAttendance').onclick = function() {
+            // Logic to download attendance records
+            console.log('Downloading attendance records...');
+            alert('Downloading attendance records... (This would trigger the download in a real system)');
+        };
+    </script>
+</body>
+</html>
