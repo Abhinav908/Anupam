@@ -4,38 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .weather-section { margin-bottom: 20px; }
-        h2 { color: #333; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://openweathermap.org/api/js/weather-widget.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Weather Dashboard</h1>
-
-    <div class="weather-section">
-        <h2>Weather Search</h2>
-        <input type="text" id="location" placeholder="Enter location" />
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+        <input type="text" id="city-input" placeholder="Enter city name..." autocomplete="off">
         <button id="search-btn">Search</button>
+        <div id="current-weather"></div>
+        <div id="forecast"><h2>5-Day Forecast</h2></div>
     </div>
-
-    <div class="weather-section" id="current-weather">
-        <h2>Current Weather</h2>
-        <p id="current-weather-display"></p>
-    </div>
-
-    <div class="weather-section" id="five-day-forecast">
-        <h2>5-Day Forecast</h2>
-        <div id="forecast-display"></div>
-    </div>
-
-    <div class="weather-section" id="hourly-forecast">
-        <h2>Hourly Forecast</h2>
-        <div id="hourly-display"></div>
-    </div>
-
     <script>
-        // JavaScript for handling weather search and displaying data would go here
+        const apiKey = 'YOUR_API_KEY';
+        const currentWeather = async (city) => {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+            const data = await response.json();
+            displayCurrentWeather(data);
+        };
+        const displayCurrentWeather = (data) => {
+            const weatherDiv = document.getElementById('current-weather');
+            weatherDiv.innerHTML = `<h3>${data.name}</h3>
+                                   <p>${data.weather[0].description}</p>
+                                   <p>Temperature: ${data.main.temp}°C</p>`;
+        };
+        document.getElementById('search-btn').onclick = function() {
+            const city = document.getElementById('city-input').value;
+            currentWeather(city);
+        };
     </script>
 </body>
 </html>
