@@ -4,51 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance System</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        form { margin: 20px; }
-    </style>
+    <script>
+        function saveData() {
+            const name = document.getElementById('name').value;
+            const rollNumber = document.getElementById('rollNumber').value;
+            const group = document.getElementById('group').value;
+
+            const attendanceData = {
+                name: name,
+                rollNumber: rollNumber,
+                group: group,
+                timestamp: new Date().toISOString()
+            };
+
+            let allData = JSON.parse(localStorage.getItem('attendanceData')) || [];
+            allData.push(attendanceData);
+            localStorage.setItem('attendanceData', JSON.stringify(allData));
+
+            alert('Data saved successfully!');
+        }
+
+        function downloadData() {
+            const data = localStorage.getItem('attendanceData');
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'attendanceData.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
 </head>
 <body>
     <h1>Attendance System</h1>
-    <h2>Student Attendance</h2>
-    <form id="attendanceForm">
+    <form onsubmit="event.preventDefault(); saveData();">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" required>
+        <br>
         <label for="rollNumber">Roll Number:</label>
-        <input type="text" id="rollNumber" name="rollNumber" required>
-        <button type="submit">Mark Attendance</button>
+        <input type="text" id="rollNumber" required>
+        <br>
+        <label for="group">Group:</label>
+        <select id="group" required>
+            <option value="MJC">MJC</option>
+            <option value="MIC">MIC</option>
+        </select>
+        <br>
+        <button type="submit">Submit</button>
     </form>
-
-    <h2>Admin Panel</h2>
-    <button id="viewAttendance">View Attendance</button>
-    <button id="downloadAttendance">Download Attendance</button>
-
-    <script>
-        // JavaScript to handle attendance marking and admin functionalities
-        const attendanceForm = document.getElementById('attendanceForm');
-
-        attendanceForm.onsubmit = function(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const rollNumber = document.getElementById('rollNumber').value;
-
-            console.log(`${name} (Roll No: ${rollNumber}) has marked attendance.`);
-            alert('Attendance marked successfully!');
-            attendanceForm.reset();
-        };
-
-        document.getElementById('viewAttendance').onclick = function() {
-            // Logic to view attendance records
-            console.log('Viewing attendance records...');
-            alert('Viewing attendance records... (This would show the actual records in a real system)');
-        };
-
-        document.getElementById('downloadAttendance').onclick = function() {
-            // Logic to download attendance records
-            console.log('Downloading attendance records...');
-            alert('Downloading attendance records... (This would trigger the download in a real system)');
-        };
-    </script>
+    <button onclick="downloadData()">Download Attendance Data</button>
 </body>
 </html>
